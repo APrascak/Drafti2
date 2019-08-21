@@ -8,10 +8,10 @@
       <v-list dense>
         <v-list-item>
           <v-list-item-action @click="">
-            <v-icon>mdi-view-dashboard</v-icon>
+            <v-icon>mdi-football</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>Dashboard</v-list-item-title>
+            <v-list-item-title>Mock Draft</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-list-item>
@@ -30,11 +30,16 @@
       clipped-left
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>
+        Drafti.io
+        <v-icon>mdi-football</v-icon>
+        </v-toolbar-title>
     </v-app-bar>
 
     <v-content>
-      <router-view></router-view>
+      <v-container-fluid>
+        <router-view></router-view>
+      </v-container-fluid>
     </v-content>
 
     <v-footer app>
