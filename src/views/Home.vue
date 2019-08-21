@@ -1,50 +1,97 @@
 <template>
   <v-container>
     <v-row>
-      <v-col class='white--text' offset-md='1' md='2'>
-        Your Team:
+      <v-col md="4">
+        <h2>Login</h2>
+        <v-form>
+          <v-text-field
+              class="mt-4"
+              solo
+              label="Email"
+              clearable
+            ></v-text-field>
+            <v-text-field
+              solo
+              label="Password"
+              clearable
+            ></v-text-field>
+            <v-btn small color="green" justify="center">Login</v-btn>
+        </v-form>
       </v-col>
-      <v-col class="white--text" md='2'>
-        Team #:
-      </v-col>
-      <v-col class="white--text" md='2'>
-        <h3 class="mb-7">Players Available</h3>
-        <v-list max-height="400px" class="overflow-y-auto">
-          <v-list-item v-for="player in stat2018" :key="player.Player">
-            {{ player.Player }}
-          </v-list-item>
-        </v-list>
-      </v-col>
-      <v-col class="white--text" md='2'>
-        Player Statistics
-      </v-col>
-      <v-col class="white--text" md='2'>
-        Draft Feed
+      <v-col offset-md="2" md="4">
+        <h2 class="center">Sign Up</h2>
+        <v-text-field
+              class="mt-4"
+              solo
+              label="Email"
+              clearable
+              v-model="email"
+            ></v-text-field>
+            <v-text-field
+              solo
+              label="Password"
+              v-model="password"
+              clearable
+            ></v-text-field>
+            <v-btn small color="green">Signup</v-btn>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import ff2018 from '../assets/2018yearlyFF.json'
+import firebase from 'firebase'
+import db from '@/firebase/init'
+import slugify from 'slugify'
 
 export default {
   name: 'Home',
   data() {
     return {
-      stat2018: ff2018
+      username: null,
+      email: null,
+      password: null
+    }
+  },
+  methods: {
+    signup() {
+      if (this.email && this.password) {
+        this.slug = slugify(this.username, {
+          replacement: '-',
+          remove: /[$*_+~.()'"!\-:@]/g,
+          lower: true
+        })
+        let ref = db.collection('users').doc(this.slug)
+        ref.get().then(doc => {
+          if (doc.exists) {
+            this.feedback = 'This email is already in use'
+          } else {
+            firebase.auth().createUserWithEmailAndPassword(
+            this.email,this.password)
+            .then(cred => {
+              console.log(cred)
+              ref.set({
+                user_id: cred.user.uid,
+                slug: this.slug,
+                user_email: cred.user.email,
+                username: this.username
+              })
+            }).then(() => {
+              this.$router.push({ name: 'Home' })
+            })
+            .catch(err => {
+              console.log(err)
+              this.feedback = err.message
+            })
+          }
+        })
+      } else {
+        this.feedback = 'You must enter both a username and a password.'
+      }
     }
   },
   created() {
-    // Adjust name formatting for every player
-    var i
-    ff2018.forEach((player) => {
-      for (i = 0; i < player.Player.length; i++) {
-        if (player.Player[i] == '*' || player.Player[i] == '\\') {
-          player.Player = player.Player.slice(0,i)
-        }
-      }
-    })
+    
   }
 };
 </script>
