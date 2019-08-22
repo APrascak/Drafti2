@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import firebase from 'firebase'
 import Home from './views/Home.vue'
 import MockDraft from './views/MockDraft.vue'
+import Settings from './views/Settings.vue'
 
 
 Vue.use(Router)
@@ -13,7 +14,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Home',
       component: Home
     },
     {
@@ -31,13 +32,21 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/settings/:id',
+      name: 'Settings',
+      component: Settings,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(rec => rec.meta.requiresAuth)) {
-    let user = firebase.auth().currentUser()
+    let user = firebase.auth().currentUser
     if (user) {
       next()
     } else {

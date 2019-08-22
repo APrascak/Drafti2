@@ -9,31 +9,39 @@
               solo
               label="Email"
               clearable
+              v-model="logUser"
             ></v-text-field>
             <v-text-field
               solo
               label="Password"
               clearable
+              v-model="logPW"
             ></v-text-field>
-            <v-btn small color="green" justify="center">Login</v-btn>
+            <v-btn small color="green" justify="center" @click="login">Login</v-btn>
         </v-form>
       </v-col>
       <v-col offset-md="2" md="4">
         <h2 class="center">Sign Up</h2>
         <v-text-field
-              class="mt-4"
-              solo
-              label="Email"
-              clearable
-              v-model="email"
-            ></v-text-field>
-            <v-text-field
-              solo
-              label="Password"
-              v-model="password"
-              clearable
-            ></v-text-field>
-            <v-btn small color="green">Signup</v-btn>
+          class="mt-4"
+          solo
+          label="Username"
+          clearable
+          v-model="username"
+        ></v-text-field>
+        <v-text-field
+          solo
+          label="Email"
+          clearable
+          v-model="email"
+        ></v-text-field>
+        <v-text-field
+          solo
+          label="Password"
+          clearable
+          v-model="password"
+        ></v-text-field>
+        <v-btn small color="green" @click="signup()">Signup</v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -50,7 +58,10 @@ export default {
     return {
       username: null,
       email: null,
-      password: null
+      password: null,
+      feedback: null,
+      logUser: null,
+      logPW: null
     }
   },
   methods: {
@@ -87,6 +98,24 @@ export default {
         })
       } else {
         this.feedback = 'You must enter both a username and a password.'
+      }
+    },
+    login() {
+      if (this.logUser && this.logPW) {
+        firebase.auth().signInWithEmailAndPassword(this.logUser, this.logPW)
+        .then(cred => {
+          console.log(cred.user)
+          this.logUser = null
+          this.logPW = null
+          this.$router.push({ name: 'Settings', params: { id: this.user.uid}})
+        })
+        .catch(err => {
+          this.feedback = err.message
+        })
+        this.feedback = null
+
+      } else {
+        this.feedback = 'Please fill in both fields'
       }
     }
   },

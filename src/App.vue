@@ -7,19 +7,27 @@
     >
       <v-list dense>
         <v-list-item router :to="'/MockDraft'">
-          <v-list-item-action @click="">
+          <v-list-item-action>
             <v-icon>mdi-football</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Mock Draft</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
-        <v-list-item>
+        <v-list-item @click="settings">
           <v-list-item-action>
             <v-icon>mdi-settings</v-icon>
           </v-list-item-action>
           <v-list-item-content>
             <v-list-item-title>Settings</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+        <v-list-item v-if="user" @click="logout">
+          <v-list-item-action>
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Sign Out</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -31,8 +39,7 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        Drafti<span class="green--text">.io</span>
-        <!-- <v-icon color="green">mdi-football</v-icon> -->
+        <span router :to="'/Home'">Drafti<span class="green--text">.io</span></span>
         </v-toolbar-title>
     </v-app-bar>
 
@@ -59,9 +66,30 @@ export default {
   },
   data: () => ({
     drawer: null,
+    user: null
   }),
+  methods: {
+    logout() {
+      firebase.auth().signOut().then(() => {
+        this.$router.push({ name: 'Home' })
+      })
+    },
+    settings() {
+      if (this.user) {
+        console.log(this.user)
+        this.$router.push({ name: 'Settings', params: { id: this.user.uid}})
+      }
+    }
+  },
   created () {
     this.$vuetify.theme.dark = true
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        this.user = user
+      } else {
+        this.user = null
+      }
+    })
   },
 };
 </script>
