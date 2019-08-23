@@ -85,7 +85,12 @@ export default {
                 user_id: cred.user.uid,
                 slug: this.slug,
                 user_email: cred.user.email,
-                username: this.username
+                username: this.username,
+                size: 10,
+                pos: 1,
+                rb: 2,
+                wr: 2,
+                flex: 1
               })
             }).then(() => {
               this.$router.push({ name: 'Home' })
