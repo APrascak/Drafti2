@@ -6,7 +6,7 @@
       clipped
     >
       <v-list dense>
-        <v-list-item router :to="'/MockDraft'">
+        <v-list-item @click="mockDraft()">
           <v-list-item-action>
             <v-icon>mdi-football</v-icon>
           </v-list-item-action>
@@ -78,6 +78,11 @@ export default {
       if (this.user) {
         console.log(this.user)
         this.$router.push({ name: 'Settings', params: { id: this.user.uid}})
+      }
+    },
+    mockDraft() {
+      if (this.user) {
+        this.$router.push({ name: 'mockdraft' })
       }
     }
   },

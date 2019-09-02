@@ -90,7 +90,11 @@ export default {
                 pos: 1,
                 rb: 2,
                 wr: 2,
-                flex: 1
+                flex: 1,
+                draft: {
+                  userTeam: [],
+                  otherTeams: []
+                }
               })
             }).then(() => {
               this.$router.push({ name: 'Home' })
