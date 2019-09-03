@@ -80,7 +80,6 @@ export default {
             firebase.auth().createUserWithEmailAndPassword(
             this.email,this.password)
             .then(cred => {
-              console.log(cred)
               ref.set({
                 user_id: cred.user.uid,
                 slug: this.slug,
@@ -91,16 +90,12 @@ export default {
                 rb: 2,
                 wr: 2,
                 flex: 1,
-                draft: {
-                  userTeam: [],
-                  otherTeams: []
-                }
+                draft: []
               })
             }).then(() => {
               this.$router.push({ name: 'Home' })
             })
             .catch(err => {
-              console.log(err)
               this.feedback = err.message
             })
           }
@@ -113,7 +108,6 @@ export default {
       if (this.logUser && this.logPW) {
         firebase.auth().signInWithEmailAndPassword(this.logUser, this.logPW)
         .then(cred => {
-          console.log(cred.user)
           this.logUser = null
           this.logPW = null
           this.$router.push({ name: 'Settings', params: { id: this.user.uid}})

@@ -1,14 +1,52 @@
 [
     {
         "rank": 1,
-        "name": "Saquon Barkley"
+        "name": "Saquon Barkley",
+        "pos": "RB"
     },
     {
         "rank": 2,
-        "name": "Christian McCaffrey"
+        "name": "Christian McCaffrey",
+        "pos": "RB"
     },
     {
         "rank": 3,
-        "name": "Alvin Kamara"
+        "name": "Alvin Kamara",
+        "pos": "RB"
+    },
+    {
+        "rank": 4,
+        "name": "Ezekiel Elliott",
+        "pos": "RB"
+    },
+    {
+        "rank": 5,
+        "name": "David Johnson",
+        "pos": "RB"
+    },
+    {
+        "rank": 6,
+        "name": "Davante Adams",
+        "pos": "WR"
+    },
+    {
+        "rank": 7,
+        "name": "DeAndre Hopkins",
+        "pos": "WR"
+    },
+    {
+        "rank": 8,
+        "name": "Todd Gurley",
+        "pos": "RB"
+    },
+    {
+        "rank": 9,
+        "name": "James Conner",
+        "pos": "RB"
+    },
+    {
+        "rank": 10,
+        "name": "Odell Beckham",
+        "pos": "WR"
     }
 ]

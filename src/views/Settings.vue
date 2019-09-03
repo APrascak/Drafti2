@@ -187,7 +187,6 @@ export default {
         snapshot.forEach(doc => {
             this.user = doc.data(),
             this.user.id = doc.id
-            console.log(this.user)
         })
         })
     }

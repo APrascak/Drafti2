@@ -3,11 +3,29 @@
     <v-row>
       <v-col class='white--text' md='2'>
         <h3 class="mb-7">Your Team:</h3>
-        <p>Draft Size: {{ this.user.size }}</p>
-        <p>Pick Position: {{ this.user.pos }}</p>
-        <p>WR: {{ this.user.wr }}</p>
-        <p>RB: {{ this.user.rb }}</p>
-        <p>FLEX: {{ this.user.flex }}</p>
+        <v-list>
+          <v-list-item>
+            <span class="green--text">QB</span>: {{ userTeam.qb }}
+          </v-list-item>
+          <v-list-item v-for="rb in user.rb" :key="rb">
+            RB{{ rb }}: Test
+          </v-list-item>
+          <v-list-item v-for="wr in user.wr" :key="wr">
+            WR{{ wr }}: Test
+          </v-list-item>
+          <v-list-item>
+            TE:
+          </v-list-item>
+          <v-list-item v-for="flex in user.flex" :key="flex">
+            FLEX{{ flex }}: Test
+          </v-list-item>
+          <v-list-item>
+            D/ST: 
+          </v-list-item>
+          <v-list-item>
+            K:
+          </v-list-item>
+        </v-list>
       </v-col>
       <v-col class="white--text" md='2'>
         <h3 class="mb-7">Team #:</h3>
@@ -42,6 +60,9 @@
             2018 PPG: <span class="green--text">&nbsp;{{ display.PPR / display.G | round(2) }}</span>
           </v-list-item>
         </v-list>
+        <div class="text-center">
+          <v-btn class="ma-3" justify="center" v-if="display" color="green" @click=draft(display)>Draft</v-btn>
+        </div>
       </v-col>
       <v-col class="white--text" md='2'>
         <h3 class="mb-7">Draft Feed</h3>
@@ -64,7 +85,19 @@ export default {
       stat2018: ff2018,
       rankings: rankings2019,
       user: null,
-      display: null
+      display: null,
+      team: null,
+      userTeam: {
+        qb: null,
+        rb: [],
+        wr: [],
+        te: null,
+        flex: [],
+        dst: null,
+        k: null
+      },
+      otherTeams: [],
+      viewTeam: null
     }
   },
   filters: {
@@ -77,6 +110,9 @@ export default {
           this.display = player
         }
       })
+    },
+    draft(player) {
+      
     }
   },
   created() {
@@ -96,9 +132,27 @@ export default {
     snapshot.forEach(doc => {
         this.user = doc.data(),
         this.user.id = doc.id
-        console.log(this.user)
     })
     })
+
+    for(i = 1; i <= this.draftParams.playerNum; i++) {
+      if (i != this.draftParams.pickPos) {
+        this.otherTeams.push({
+          name: Number(i),
+          qb: null,
+          rb: [],
+          wr: [],
+          te: null,
+          flx: [],
+          k: null,
+          dst: null
+        })
+      }
+    }
+
+    for (i = 0; i < this.user.pos - 1; i++) {
+      this.cpuDraft(this.otherTeams[i])
+    }
   }
 };
 </script>
