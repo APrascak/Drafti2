@@ -61,13 +61,16 @@
           </v-list-item>
         </v-list>
         <div class="text-center">
-          <v-btn class="ma-3" justify="center" v-if="display" color="green" @click=draft(display)>Draft</v-btn>
+          <v-btn class="ma-3" justify="center" v-if="display" color="green" @click=draft(currDisplay)>Draft</v-btn>
         </div>
       </v-col>
       <v-col class="white--text" md='2'>
         <h3 class="mb-7">Draft Feed</h3>
       </v-col>
     </v-row>
+    <v-snackbar class="black--text" v-model="error" color="red" top>
+        {{ errorMsg }}
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -86,7 +89,10 @@ export default {
       rankings: rankings2019,
       user: null,
       display: null,
+      currDisplay: null,
       team: null,
+      currRound: 1,
+      currPick: 1,
       userTeam: {
         qb: null,
         rb: [],
@@ -97,7 +103,10 @@ export default {
         k: null
       },
       otherTeams: [],
-      viewTeam: null
+      viewTeam: null,
+      picks: [],
+      error: null,
+      errorMsg: ''
     }
   },
   filters: {
@@ -105,6 +114,7 @@ export default {
   },
   methods: {
     displayInfo(person) {
+      this.currDisplay = person
       ff2018.forEach(player => {
         if (player.Player == person.name) {
           this.display = player
@@ -112,7 +122,57 @@ export default {
       })
     },
     draft(player) {
-      
+
+      player.Round = this.currRound
+      player.Pick = this.currPick
+      player.OvPick = (this.currRound * this.user.size) + this.currPick - 10
+      this.picks.push(player)
+      console.log(player)
+
+      if (player.pos == "QB" && !this.userTeam.qb) {
+        this.userTeam.qb = player
+      } else if (player.pos == 'RB' && this.userTeam.rb.length < this.user.rb) {
+        this.userTeam.rb.push(player)
+      } else if (player.pos == 'WR' && this.userTeam.wrlength < this.user.wr) {
+        this.userTeam.wr.push(player)
+      } else if (player.pos == 'TE' && !this.userTeam.te) {
+        this.userTeam.te = player
+      } else if ((player.pos == 'RB' || player.pos == 'WR' || player.pos == 'TE') && this.userTeam.flex.length < this.user.flex) {
+        this.userTeam.flex.push(player)
+      } else {
+        this.error = true
+        this.errorMsg = 'This position is full!'
+        this.picks.pop()
+        return
+      }
+
+      this.rankings.splice(this.rankings.indexOf(player),1)
+
+      if (this.currPick == this.user.size) {
+        this.currRound++
+        this.currPick = 1
+      } else {
+        this.currPick++
+        var i
+        if (this.currRound % 2 == 1) {
+          for (i = this.currPick; i <= this.user.size; i++) {
+            this.cpuDraft(this.otherTeams[i-2])
+          }
+          for (i = this.currPick; i <= (this.user.size - this.user.pos); i++) {
+            this.cpuDraft(this.otherTeams[this.user.size - this.currPick-1])
+          }
+        } else {
+          for (i = this.currPick; i <= this.user.size; i++) {
+            this.cpuDraft(this.otherTeams[this.user.size - this.currPick])
+          }
+          for (i = this.currPick; i < this.user.pos; i++) {
+            this.cpuDraft(this.otherTeams[i-1])
+          }
+        }
+      }
+    },
+    cpuDraft(team) {
+
     }
   },
   created() {
@@ -135,8 +195,8 @@ export default {
     })
     })
 
-    for(i = 1; i <= this.draftParams.playerNum; i++) {
-      if (i != this.draftParams.pickPos) {
+    for(i = 1; i <= this.user.size; i++) {
+      if (i != this.user.pos) {
         this.otherTeams.push({
           name: Number(i),
           qb: null,
