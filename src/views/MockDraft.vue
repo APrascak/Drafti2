@@ -3,22 +3,26 @@
     <v-row>
       <v-col class='white--text' md='2'>
         <h3 class="mb-7">Your Team:</h3>
-        <v-list>
+        <v-list v-if="user">
           <v-list-item>
             <span class="green--text">QB</span>: {{ userTeam.qb }}
           </v-list-item>
           <v-list-item v-for="rb in user.rb" :key="rb">
-            RB{{ rb }}: Test
+            RB{{ rb }}: <span v-if="userTeam.rb[rb-1]">&nbsp;{{ userTeam.rb[rb-1].name }}</span>
           </v-list-item>
-          <v-list-item v-for="wr in user.wr" :key="wr">
-            WR{{ wr }}: Test
-          </v-list-item>
+          <div>
+            <v-list-item v-for="wr in user.wr" :key="wr">
+              WR{{ wr }}:  <span v-if="userTeam.wr[wr-1]">&nbsp;{{ userTeam.wr[wr-1].name }}</span>
+            </v-list-item>
+          </div>
           <v-list-item>
             TE:
           </v-list-item>
-          <v-list-item v-for="flex in user.flex" :key="flex">
-            FLEX{{ flex }}: Test
-          </v-list-item>
+          <div>
+            <v-list-item v-for="flex in user.flex" :key="flex">
+              FLEX{{ flex }}: <span v-if="userTeam.flex[flex-1]">&nbsp;{{ userTeam.flex[flex-1].name }}</span>
+            </v-list-item>
+          </div>
           <v-list-item>
             D/ST: 
           </v-list-item>
@@ -127,13 +131,12 @@ export default {
       player.Pick = this.currPick
       player.OvPick = (this.currRound * this.user.size) + this.currPick - 10
       this.picks.push(player)
-      console.log(player)
 
       if (player.pos == "QB" && !this.userTeam.qb) {
         this.userTeam.qb = player
       } else if (player.pos == 'RB' && this.userTeam.rb.length < this.user.rb) {
         this.userTeam.rb.push(player)
-      } else if (player.pos == 'WR' && this.userTeam.wrlength < this.user.wr) {
+      } else if (player.pos == 'WR' && this.userTeam.wr.length < this.user.wr) {
         this.userTeam.wr.push(player)
       } else if (player.pos == 'TE' && !this.userTeam.te) {
         this.userTeam.te = player
@@ -143,9 +146,8 @@ export default {
         this.error = true
         this.errorMsg = 'This position is full!'
         this.picks.pop()
-        return
+        return;
       }
-
       this.rankings.splice(this.rankings.indexOf(player),1)
 
       if (this.currPick == this.user.size) {
@@ -193,26 +195,27 @@ export default {
         this.user = doc.data(),
         this.user.id = doc.id
     })
-    })
-
-    for(i = 1; i <= this.user.size; i++) {
-      if (i != this.user.pos) {
-        this.otherTeams.push({
-          name: Number(i),
-          qb: null,
-          rb: [],
-          wr: [],
-          te: null,
-          flx: [],
-          k: null,
-          dst: null
-        })
+    }).then( () => {
+      for(i = 1; i <= this.user.size; i++) {
+        if (i != this.user.pos) {
+          this.otherTeams.push({
+            name: Number(i),
+            qb: null,
+            rb: [],
+            wr: [],
+            te: null,
+            flx: [],
+            k: null,
+            dst: null
+          })
+        }
+      }
+      for (i = 0; i < this.user.pos - 1; i++) {
+        this.cpuDraft(this.otherTeams[i])
       }
     }
-
-    for (i = 0; i < this.user.pos - 1; i++) {
-      this.cpuDraft(this.otherTeams[i])
-    }
+      
+    )
   }
 };
 </script>
