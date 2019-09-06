@@ -48,5 +48,105 @@
         "rank": 10,
         "name": "Odell Beckham",
         "pos": "WR"
+    },
+    {
+        "rank": 11,
+        "name": "Joe Mixon",
+        "pos": "RB"
+    },
+    {
+        "rank": 12,
+        "name": "Julio Jones",
+        "pos": "WR"
+    },
+    {
+        "rank": 13,
+        "name": "JuJu Smith-Schuster",
+        "pos": "WR"
+    },
+    {
+        "rank": 14,
+        "name": "Dalvin Cook",
+        "pos": "RB"
+    },
+    {
+        "rank": 15,
+        "name": "Michael Thomas",
+        "pos": "WR"
+    },
+    {
+        "rank": 16,
+        "name": "Tyreek Hill",
+        "pos": "WR"
+    },
+    {
+        "rank": 17,
+        "name": "Travis Kelce",
+        "pos": "TE"
+    },
+    {
+        "rank": 18,
+        "name": "Nick Chubb",
+        "pos": "RB"
+    },
+    {
+        "rank": 19,
+        "name": "Mike Evans",
+        "pos": "WR"
+    },
+    {
+        "rank": 20,
+        "name": "Josh Jacobs",
+        "pos": "RB"
+    },
+    {
+        "rank": 21,
+        "name": "Le'Veon Bell",
+        "pos": "RB"
+    },
+    {
+        "rank": 22,
+        "name": "Keenan Allen",
+        "pos": "WR"
+    },
+    {
+        "rank": 23,
+        "name": "Aaron Jones",
+        "pos": "RB"
+    },
+    {
+        "rank": 24,
+        "name": "Adam Thielen",
+        "pos": "WR"
+    },
+    {
+        "rank": 25,
+        "name": "Chris Carson",
+        "pos": "RB"
+    },
+    {
+        "rank": 26,
+        "name": "Kerryon Johnson",
+        "pos": "RB"
+    },
+    {
+        "rank": 27,
+        "name": "Antonio Brown",
+        "pos": "WR"
+    },
+    {
+        "rank": 28,
+        "name": "Devonta Freeman",
+        "pos": "RB"
+    },
+    {
+        "rank": 29,
+        "name": "Patrick Mahomes",
+        "pos": "QB"
+    },
+    {
+        "rank": 30,
+        "name": "Julian Edelman",
+        "pos": "WR"
     }
 ]

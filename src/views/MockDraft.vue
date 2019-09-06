@@ -5,29 +5,29 @@
         <h3 class="mb-7">Your Team:</h3>
         <v-list v-if="user">
           <v-list-item>
-            <span class="green--text">QB</span>: {{ userTeam.qb }}
+            <span class="green--text">QB</span>: <span v-if="userTeam.qb">{{ userTeam.qb.name }}</span>
           </v-list-item>
           <v-list-item v-for="rb in user.rb" :key="rb">
-            RB{{ rb }}: <span v-if="userTeam.rb[rb-1]">&nbsp;{{ userTeam.rb[rb-1].name }}</span>
+            <span class="green--text">RB{{ rb }}</span>: <span v-if="userTeam.rb[rb-1]">&nbsp;{{ userTeam.rb[rb-1].name }}</span>
           </v-list-item>
           <div>
             <v-list-item v-for="wr in user.wr" :key="wr">
-              WR{{ wr }}:  <span v-if="userTeam.wr[wr-1]">&nbsp;{{ userTeam.wr[wr-1].name }}</span>
+              <span class="green--text">WR{{ wr }}</span>:  <span v-if="userTeam.wr[wr-1]">&nbsp;{{ userTeam.wr[wr-1].name }}</span>
             </v-list-item>
           </div>
           <v-list-item>
-            TE:
+            <span class="green--text">TE</span>: <span v-if="userTeam.te">&nbsp;{{ userTeam.te.name }}</span>
           </v-list-item>
           <div>
             <v-list-item v-for="flex in user.flex" :key="flex">
-              FLEX{{ flex }}: <span v-if="userTeam.flex[flex-1]">&nbsp;{{ userTeam.flex[flex-1].name }}</span>
+              <span class="green--text">FLEX{{ flex }}</span>: <span v-if="userTeam.flex[flex-1]">&nbsp;{{ userTeam.flex[flex-1].name }}</span>
             </v-list-item>
           </div>
           <v-list-item>
-            D/ST: 
+            <span class="green--text">D/ST</span>: 
           </v-list-item>
           <v-list-item>
-            K:
+            <span class="green--text">K</span>:
           </v-list-item>
         </v-list>
       </v-col>
@@ -67,8 +67,8 @@
       </v-col>
       <v-col class="white--text" md='3'>
         <h3 class="mb-7">Draft Feed</h3>
-        <v-list>
-          <v-list-item v-for="player in picks" :key="player.name">
+        <v-list max-height="400px" class="overflow-y-auto">
+          <v-list-item v-for="player in picks.slice().reverse()" :key="player.name">
             <span class="green--text">{{ player.Round }}.{{ player.Pick }}</span>&nbsp; {{ player.name }}
           </v-list-item>
         </v-list>
@@ -120,6 +120,7 @@ export default {
   },
   methods: {
     displayInfo(person) {
+      console.log(person)
       this.currDisplay = person
       ff2018.forEach(player => {
         if (player.Player == person.name) {
@@ -176,7 +177,36 @@ export default {
       }
     },
     cpuDraft(team) {
-
+      var k
+      for (k=0; k<this.rankings.length;k++) {
+        if (this.rankings[k].pos == 'QB' && team.qb == null) {
+          team.qb == this.rankings[k]
+          break
+        } else if (this.rankings[k].pos == 'RB' && team.rb.length < this.user.rb) {
+          team.rb.push(this.rankings[k])
+          break
+        } else if (this.rankings[k].pos == 'WR' && team.wr.length < this.user.wr) {
+          team.wr.push(this.rankings[k])
+          break
+        } else if (this.rankings[k].pos == 'TE' && team.te == null) {
+          team.te = this.rankings[k]
+          break
+        } else if ((this.rankings[k].pos == 'RB' || this.rankings[k].pos == 'WR' || this.rankings[k].pos == 'TE') && userTeam.flex.length < this.user.flex) {
+          team.flex.push(this.rankings[k])
+          break
+        }
+      }
+      this.rankings[k].Round  = this.currRound
+      this.rankings[k].Pick   = this.currPick
+      this.rankings[k].OvPick = (this.currRound * this.user.size) + this.currPick - 10
+      this.picks.push(this.rankings[k])
+      this.rankings.splice(k,1)
+      if (this.currPick == this.user.size) {
+        this.currRound++
+        this.currPick = 1
+      } else {
+        this.currPick++
+      }
     }
   },
   created() {
