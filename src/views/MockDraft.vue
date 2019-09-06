@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col class='white--text' md='2'>
+      <v-col class='white--text' md='3'>
         <h3 class="mb-7">Your Team:</h3>
         <v-list v-if="user">
           <v-list-item>
@@ -30,9 +30,6 @@
             K:
           </v-list-item>
         </v-list>
-      </v-col>
-      <v-col class="white--text" md='2'>
-        <h3 class="mb-7">Team #:</h3>
       </v-col>
       <v-col class="white--text" md='3'>
         <h3 class="mb-7">Players Available</h3>
@@ -68,8 +65,13 @@
           <v-btn class="ma-3" justify="center" v-if="display" color="green" @click=draft(currDisplay)>Draft</v-btn>
         </div>
       </v-col>
-      <v-col class="white--text" md='2'>
+      <v-col class="white--text" md='3'>
         <h3 class="mb-7">Draft Feed</h3>
+        <v-list>
+          <v-list-item v-for="player in picks" :key="player.name">
+            <span class="green--text">{{ player.Round }}.{{ player.Pick }}</span>&nbsp; {{ player.name }}
+          </v-list-item>
+        </v-list>
       </v-col>
     </v-row>
     <v-snackbar class="black--text" v-model="error" color="red" top>
