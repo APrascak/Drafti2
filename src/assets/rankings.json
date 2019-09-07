@@ -148,5 +148,155 @@
         "rank": 30,
         "name": "Julian Edelman",
         "pos": "WR"
+    },
+    {
+        "rank": 31,
+        "name": "Leonard Fournette",
+        "pos": "RB"
+    },
+    {
+        "rank": 32,
+        "name": "George Kittle",
+        "pos": "TE"
+    },
+    {
+        "rank": 33,
+        "name": "Zach Ertz",
+        "pos": "TE"
+    },
+    {
+        "rank": 34,
+        "name": "Amari Cooper",
+        "pos": "WR"
+    },
+    {
+        "rank": 35,
+        "name": "Robert Woods",
+        "pos": "WR"
+    },
+    {
+        "rank": 36,
+        "name": "Sony Michel",
+        "pos": "RB"
+    },
+    {
+        "rank": 37,
+        "name": "David Montgomery",
+        "pos": "RB"
+    },
+    {
+        "rank": 38,
+        "name": "Cooper Kupp",
+        "pos": "WR"
+    },
+    {
+        "rank": 39,
+        "name": "Derrius Guice",
+        "pos": "RB"
+    },
+    {
+        "rank": 40,
+        "name": "Marlon Mack",
+        "pos": "RB"
+    },
+    {
+        "rank": 41,
+        "name": "Chris Godwin",
+        "pos": "WR"
+    },
+    {
+        "rank": 42,
+        "name": "Mark Ingram",
+        "pos": "RB"
+    },
+    {
+        "rank": 43,
+        "name": "Deshaun Watson",
+        "pos": "QB"
+    },
+    {
+        "rank": 44,
+        "name": "Derrick Henry",
+        "pos": "RB"
+    },
+    {
+        "rank": 45,
+        "name": "Stefon Diggs",
+        "pos": "WR"
+    },
+    {
+        "rank": 46,
+        "name": "Damien Williams",
+        "pos": "RB"
+    },
+    {
+        "rank": 47,
+        "name": "T.Y. Hilton",
+        "pos": "WR"
+    },
+    {
+        "rank": 48,
+        "name": "Brandin Cooks",
+        "pos": "WR"
+    },
+    {
+        "rank": 49,
+        "name": "Tyler Lockett",
+        "pos": "WR"
+    },
+    {
+        "rank": 50,
+        "name": "James White",
+        "pos": "RB"
+    },
+    {
+        "rank": 51,
+        "name": "Kenny Golladay",
+        "pos": "WR"
+    },
+    {
+        "rank": 52,
+        "name": "Tyler Boyd",
+        "pos": "WR"
+    },
+    {
+        "rank": 53,
+        "name": "D.J. Moore",
+        "pos": "WR"
+    },
+    {
+        "rank": 54,
+        "name": "Tevin Coleman",
+        "pos": "RB"
+    },
+    {
+        "rank": 55,
+        "name": "Robby Anderson",
+        "pos": "WR"
+    },
+    {
+        "rank": 56,
+        "name": "Evan Engram",
+        "pos": "TE"
+    },
+    {
+        "rank": 57,
+        "name": "Melvin Gordon",
+        "pos": "RB"
+    },
+    {
+        "rank": 58,
+        "name": "A.J. Green",
+        "pos": "WR"
+    },
+    {
+        "rank": 59,
+        "name": "Duke Johnson",
+        "pos": "RB"
+    },
+    {
+        "rank": 60,
+        "name": "Josh Gordon",
+        "pos": "WR"
     }
 ]
