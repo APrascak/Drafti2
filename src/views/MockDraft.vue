@@ -125,8 +125,10 @@ export default {
       ff2018.forEach(player => {
         if (player.Player == person.name) {
           this.display = player
+          return;
         }
       })
+
     },
     draft(player) {
 
@@ -191,7 +193,7 @@ export default {
         } else if (this.rankings[k].pos == 'TE' && team.te == null) {
           team.te = this.rankings[k]
           break
-        } else if ((this.rankings[k].pos == 'RB' || this.rankings[k].pos == 'WR' || this.rankings[k].pos == 'TE') && userTeam.flex.length < this.user.flex) {
+        } else if ((this.rankings[k].pos == 'RB' || this.rankings[k].pos == 'WR' || this.rankings[k].pos == 'TE') && team.flex.length < this.user.flex) {
           team.flex.push(this.rankings[k])
           break
         }
@@ -236,7 +238,7 @@ export default {
             rb: [],
             wr: [],
             te: null,
-            flx: [],
+            flex: [],
             k: null,
             dst: null
           })
