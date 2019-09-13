@@ -4,6 +4,7 @@ import firebase from 'firebase'
 import Home from './views/Home.vue'
 import MockDraft from './views/MockDraft.vue'
 import Settings from './views/Settings.vue'
+import Statistics from './views/Statistics.vue'
 
 
 Vue.use(Router)
@@ -37,6 +38,14 @@ const router = new Router({
       path: '/settings/:id',
       name: 'Settings',
       component: Settings,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/statistics',
+      name: 'Statistics',
+      component: Statistics,
       meta: {
         requiresAuth: true
       }

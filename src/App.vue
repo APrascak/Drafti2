@@ -14,6 +14,14 @@
             <v-list-item-title>Mock Draft</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
+        <v-list-item @click="statistics()">
+          <v-list-item-action>
+            <v-icon>mdi-chart-bar</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>Statistics</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <v-list-item @click="settings">
           <v-list-item-action>
             <v-icon>mdi-settings</v-icon>
@@ -76,13 +84,17 @@ export default {
     },
     settings() {
       if (this.user) {
-        console.log(this.user)
         this.$router.push({ name: 'Settings', params: { id: this.user.uid}})
       }
     },
     mockDraft() {
       if (this.user) {
         this.$router.push({ name: 'mockdraft' })
+      }
+    },
+    statistics() {
+      if (this.user) {
+        this.$router.push({ name: 'Statistics' })
       }
     }
   },
